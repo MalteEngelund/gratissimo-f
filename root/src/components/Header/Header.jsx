@@ -8,9 +8,11 @@ export function Header() {
 
   return (
     <header className='bg-main-red'>
-      <NavLink to="/">
-        <img src={logo} alt="gratissimo logo" className='h-24'/>
-      </NavLink>
+      <div className='flex'>
+        <NavLink to="/">
+          <img src={logo} alt="gratissimo logo" className='h-24'/>
+        </NavLink>
+      </div>
       <NavBar />
     </header>
   )

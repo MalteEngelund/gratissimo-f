@@ -19,6 +19,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="/alle-jobs" element={<AllJobsPage />} />
             <Route path="/nyheder" element={<NewsPage />} />
+            <Route path="/nyheder/:id" element={<NewsPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/min-side" element={<MyPage />} />
             <Route path="/opret-annonce" element={<CreateJobPage />} />

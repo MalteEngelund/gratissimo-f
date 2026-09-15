@@ -10,7 +10,7 @@ export function Footer() {
 
 
   return (
-    <footer className='flex flex-row justify-around bg-main-red mt-auto text-text-white p-8'>
+    <footer className='flex flex-col md:flex-row justify-around gap-4 bg-main-red mt-auto text-text-white p-8'>
       <ul className='flex flex-col'>
         <li><ListTitle text="For jobsøgere" /></li>
         <li><NavLink>Din kundeside</NavLink></li>
