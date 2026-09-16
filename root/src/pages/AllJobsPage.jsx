@@ -4,6 +4,8 @@ import { SearchSection } from '../components/SearchSection/SearchSection'
 import searchIcon from '../assets/icons/icons8-search-100.png'
 import { SectionContainerRed } from '../components/SectionContainerRed/SectionContainerRed'
 import { useSearchParams } from 'react-router'
+import { JobCard } from '../components/JobCard/JobCard'
+import { SectionContainer } from '../components/SectionContainer/SectionContainer'
 
 export function AllJobsPage() {
 
@@ -35,9 +37,13 @@ export function AllJobsPage() {
         <SectionContainerRed>
           <SearchSection onChange={(e) => setSearch(e.target.value)} />
         </SectionContainerRed>
-      {filteredJobs?.map((job) => 
-      <div>{job.title}</div>
-      )}
+      <SectionContainer>
+        <div className='flex flex-col gap-4 '>
+        {filteredJobs?.map((job) => 
+          <JobCard jobData={job} key={job.id} />
+        )}
+        </div>
+      </SectionContainer>
     </>
   )
 }
