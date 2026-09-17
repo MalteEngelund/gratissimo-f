@@ -13,7 +13,7 @@ export function JobCategories({ categoryData, jobListingsData }) {
   return (
     <div className='w-full'>
       <SectionTitle text='Find job ved kategori' />
-      <div className='grid grid-cols-3 gap-4 w-full'>
+      <div className='grid grid-cols-2 md:grid-cols-3 gap-4 w-full'>
         {categoryData?.map((category) =>
           <NavLink key={category.id} to={`/job-kategori/${category.id}`} className=''>
             <div className='flex flex-row justify-between items-center border border-border-gray rounded w-full'>

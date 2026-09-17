@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
   const [cookies, setCookies, removeCookie] = useCookies()
 
   const now = new Date().getTime()
-  const twoHoursFromNow = now + 2 * 60 * 60 * 1000
+  const twoHoursFromNow = now + 24 * 60 * 60 * 1000
   const expireTime = new Date(twoHoursFromNow)
 
   useEffect(() => {

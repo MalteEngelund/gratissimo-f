@@ -83,7 +83,7 @@ export function CreateJobPage() {
 
           <SectionContainer>
             <form noValidate onSubmit={handleSubmit(createJob)} className='flex flex-col gap-4 w-[80vw]'>
-              <div className='flex flex-row gap-4'>
+              <div className='flex flex-col md:flex-row gap-4'>
               <div className='flex flex-col gap-4 w-full'>
                 <div className='flex flex-col'>
                   <FormLabel text='Overskrift' name='title' />

@@ -23,7 +23,7 @@ export function Caroussel({ data }) {
   }
 
   return (
-    <div className='relative w-full h-60 flex items-center justify-center'>
+    <div className='relative w-full  md:h-60 flex items-center justify-center'>
       <div className='w-[80%]'>
       <TestimonyCard testimoniesData={data[itemIndex]} />
       </div>
