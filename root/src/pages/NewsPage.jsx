@@ -8,16 +8,18 @@ export function NewsPage() {
 
   const { id } = useParams()
 
-  const { data: newsArticleData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/articles/${id}`)
-  console.log('newsArticleData: ', newsArticleData)
+  const { data: newsArticleData, isLoading: newsArticleDataIsLoading, error: newsArticleDataError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/articles/${id}`)
+  // console.log('newsArticleData: ', newsArticleData)
 
-  const { data: allArticlesData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/articles/`)
+  const { data: allArticlesData, isLoading: allArticlesDataIsLoading, error: allArticlesDataError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/articles/`)
 
 
   return (
     <>
       {newsArticleData && 
         <div className='flex flex-col gap-8 overflow-hidden'>
+          {newsArticleDataIsLoading && <p>Loading...</p>}
+          {newsArticleDataError && <p>Error: {newsArticleDataError.message}</p>}
           <img src={import.meta.env.VITE_PUBLIC_BASE_URL + `${newsArticleData.imageUrl}`} alt={newsArticleData.title} className='h-80 object-cover' />
           <article className='flex flex-col gap-4 p-4 pb-8 w-[80%] mx-auto'>
             <h1 className='text-2xl'>{newsArticleData.title}</h1>
@@ -28,8 +30,10 @@ export function NewsPage() {
       }
       <SectionContainerRed>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+          {allArticlesDataIsLoading && <p>Loading...</p>}
+          {allArticlesDataError && <p>Error: {allArticlesDataError.message}</p>}
           {allArticlesData?.map((article) =>
-          <NavLink to={`/nyheder/${article.id}`}>
+          <NavLink to={`/nyheder/${article.id}`} key={article.id}>
             <NewsCard newsData={article} />
           </NavLink>
           )}

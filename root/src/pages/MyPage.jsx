@@ -9,6 +9,7 @@ import { JobCard } from '../components/JobCard/JobCard';
 import { EditJobList } from '../components/EditJobList/EditJobList';
 import { useFetchV2 } from '../hooks/useFetchV2';
 import { FavoriteCard } from '../components/FavoriteCard/FavoriteCard';
+import { Pagination } from '../components/Pagination/Pagination';
 
 export function MyPage() {
 
@@ -17,26 +18,34 @@ export function MyPage() {
   
   const [ activeTab, setActiveTab ] = useState('Mine annoncer')
 
-  const { data: jobData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-listings')
-  console.log('jobData: ', jobData)
+  const { data: jobData, isLoading: jobDataIsLoading, error: jobDataError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-listings')
+  // console.log('jobData: ', jobData)
 
   /* const { data: favoriteData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/favorites/`)
   console.log('favoriteData: ', favoriteData) */
   
   
-  const { data: favoriteData } = useFetchV2(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/favorites/`, authToken.accessToken)
-  console.log('favoriteData: ', favoriteData)
-
-
-
-
-  
+  const { data: favoriteData, isLoading: favoriteDataIsLoading, error: favoriteDataError } = useFetchV2(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/favorites/`, authToken.accessToken)
+  // console.log('favoriteData: ', favoriteData)
 
   
   const userJobs = jobData ? jobData.filter(job => job.userId === userId) : []
-  console.log('userJobs: ', userJobs)
-
+  // console.log('userJobs: ', userJobs)
+  
   const noJobs = userJobs.length === 0
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(userJobs?.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = userJobs?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
 
   /* const handleDelete = async (jobId) => {
@@ -98,19 +107,32 @@ export function MyPage() {
               <p>Du har ingen annoncer</p>
             )}
             <div className='flex flex-col gap-4'>
-              {userJobs?.map((job) => 
+              {jobDataIsLoading && <p>Loading...</p>}
+              {jobDataError && <p>Error: {jobDataError.message}</p>}
+              {currentItems?.map((job) => 
                 <EditJobList jobData={job} key={job.id}  />
               )}
+
+              <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={setCurrentPage}
+                    />
             </div>
           </SectionContainer>
         )}
         {activeTab === 'Mine favoritter' &&(
           <>
             <SectionContainer>
+
               <div className='flex flex-col gap-4'>
+                {favoriteDataIsLoading && <p>Loading...</p>}
+                {favoriteDataError && <p>Error: {jobDataError.message}</p>}
                 {favoriteData?.map((favorite) => (
                   <FavoriteCard jobData={favorite.jobListing} key={favorite.id} favoriteId={favorite.id} />
                 ))}
+                
+                
               </div>
             </SectionContainer>
           </>

@@ -52,13 +52,18 @@ const handleFavorite = async () => {
         <h2 className='text-2xl'>{jobData.title}</h2>
         <p>{jobData.description}</p>
       </div>
-      <div className='flex flex-col gap-4 justify-between'>
+      <div className='flex flex-col gap-4 justify-between min-w-[15%]'>
         <div className='flex flex-col gap-4'>
-          <p>{jobData.region.name}</p>
-          <p>{useDanishDate(jobData.createdAt)}</p>
+          <p className='flex flex-row gap-2 w-full'><span >Lokation: </span><span>{jobData.region.name}</span></p>
+          <p className='flex flex-row gap-2 w-full'><span>Indrykket: </span><span>{useDanishDate(jobData.createdAt)}</span></p>
         </div>
         <div className='flex flex-row gap-4 justify-between'>
+          {authToken ? (
           <button className='bg-light-red px-4 py-2 rounded-2xl cursor-pointer border border-border-gray' onClick={handleFavorite}>Gem</button>
+          ) : (
+            <button className='bg-light-red px-4 py-2 rounded-2xl cursor-pointer border border-border-gray'><NavLink to='/login'>Login</NavLink></button>           
+          )
+          }
           {/* <NavLink to={`/job/${jobData.id}`}>Åben</NavLink> */}
           <button className='bg-light-red px-4 py-2 rounded-2xl cursor-pointer border border-border-gray' onClick={() => setIsModalOpen(true)}>Åben</button>
         </div>
@@ -88,7 +93,13 @@ const handleFavorite = async () => {
               <li className='flex flex-row gap-2 justify-end'><span>{jobData.zipcode}</span><span>{jobData.city}</span></li>
             </ul>
             <div className='flex flex-row gap-4 justify-between'>
-              <button className='bg-light-red cursor-pointer rounded-2xl px-4 py-2 border border-border-gray' onClick={handleFavorite}>Gem</button>
+              
+            {authToken ? (
+                <button className='bg-light-red px-4 py-2 rounded-2xl cursor-pointer border border-border-gray' onClick={handleFavorite}>Gem</button>
+              ) : (
+                <button className='bg-light-red px-4 py-2 rounded-2xl cursor-pointer border border-border-gray'><NavLink to='/login'>Login</NavLink></button>           
+              )
+            }
               <button className='bg-light-red cursor-pointer rounded-2xl px-4 py-2 border border-border-gray' onClick={() => setIsModalOpen(false)}>Luk</button>
             </div>
             <p>{signUpResponse}</p>

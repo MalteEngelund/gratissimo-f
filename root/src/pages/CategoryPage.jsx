@@ -7,24 +7,37 @@ import { useState } from 'react'
 import { JobCard } from '../components/JobCard/JobCard'
 import { SectionTitle } from '../components/SectionTitle/SectionTitle'
 import { JobCategories } from '../components/JobCategories/JobCategories'
+import { Pagination } from '../components/Pagination/Pagination'
 
 export function CategoryPage() {
 
   const { id } = useParams()
 
   const { data: jobListingsData, isLoading: isJobListingsLoading, error: jobListingsError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + `/api/job-categories/${id}`)
-  console.log('jobListingsData:', jobListingsData)
+  // console.log('jobListingsData:', jobListingsData)
 
   const { data: categoryData, isLoading: categoryIsLoading, error: categoryError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-categories')
-  console.log('categoryData:', categoryData)
+  // console.log('categoryData:', categoryData)
   const { data: allJobListingsData, isLoading: allJoblistingsLoading, error: allJobListingsError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-listings')
-  console.log('allJobListingsData:', allJobListingsData)
+  // console.log('allJobListingsData:', allJobListingsData)
 
   const [ search, setSearch ] = useState('')
   const [ isModalOpen, setIsModalOpen ] = useState(false)
 
   const filteredJobs = jobListingsData?.jobListings.filter((job) => job.title.toLowerCase().includes(search.toLowerCase())) && jobListingsData?.jobListings.filter((job) => job.description.toLowerCase().includes(search.toLowerCase()))
 
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(filteredJobs?.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredJobs?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <>
@@ -44,9 +57,14 @@ export function CategoryPage() {
       {isJobListingsLoading && <p>Loading...</p>}
       {jobListingsError && <p>Error: {jobListingsError.message}</p>}
       <div className='flex flex-col gap-4 '>
-        {filteredJobs?.map((job) => 
+        {currentItems?.map((job) => 
         <JobCard jobData={job} key={job.id} setIsModalOpen={setIsModalOpen} />
         )}
+        <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
       </div>
     </SectionContainer>
     </>

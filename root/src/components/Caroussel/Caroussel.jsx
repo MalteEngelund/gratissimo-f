@@ -12,14 +12,14 @@ export function Caroussel({ data }) {
       nextItem()
     }, 5000)
     return () => clearInterval(interval)
-  })
+  }, [])
 
   function nextItem() {
     setItemIndex((prevIndex) => (prevIndex + 1) % data.length)
   }
 
   function prevItem() {
-    setItemIndex((prevIndex) => (prevIndex - 1) % data.length)
+    setItemIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length)
   }
 
   return (

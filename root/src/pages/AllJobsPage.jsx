@@ -9,17 +9,18 @@ import { SectionContainer } from '../components/SectionContainer/SectionContaine
 import { Modal } from '../components/Modal/Modal'
 import { useFetchV2 } from '../hooks/useFetchV2'
 import { AuthContext } from '../context/AuthContext'
+import { Pagination } from '../components/Pagination/Pagination'
 
 export function AllJobsPage() {
 
   const { data: jobListingsData, isLoading: isJobListingsLoading, error: jobListingsError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-listings')
-  console.log('jobListingsData: ', jobListingsData)
+  // console.log('jobListingsData: ', jobListingsData)
 
   const { authToken } = useContext(AuthContext)
 
   if (authToken) {
     const { data: favoriteData } = useFetchV2(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/favorites/', authToken.accessToken)
-    console.log('favoriteData:', favoriteData)
+    // console.log('favoriteData:', favoriteData)
   }
 
   const [ search, setSearch ] = useState('')
@@ -34,6 +35,18 @@ export function AllJobsPage() {
 
   const filteredJobs = jobListingsData?.filter((job) => job.title.toLowerCase().includes(search.toLowerCase())) && jobListingsData?.filter((job) => job.description.toLowerCase().includes(search.toLowerCase()))
   
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(filteredJobs?.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredJobs?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <>
@@ -53,9 +66,14 @@ export function AllJobsPage() {
         {isJobListingsLoading && <p>Loading...</p>}
         {jobListingsError && <p>Error: {jobListingsError.message}</p>}
         <div className='flex flex-col gap-4 '>
-        {filteredJobs?.map((job) => 
+        {currentItems?.map((job) => 
           <JobCard jobData={job} key={job.id} setIsModalOpen={setIsModalOpen} />
         )}
+        <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
         </div>
         {/* {isModalOpen && 
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} >

@@ -56,9 +56,9 @@ export function Footer() {
     <footer className='flex flex-col lg:flex-row items-center md:justify-around gap-8 md:gap-4 bg-main-red mt-auto text-text-white p-8'>
       <ul className='flex flex-col'>
         <li><ListTitle text="For jobsøgere" /></li>
-        <li><NavLink>Din kundeside</NavLink></li>
+        <li><NavLink to={!authToken ? ('/login') : ('/min-side')}>Din kundeside</NavLink></li>
         <li><NavLink to="/opret-bruger">Opret bruger</NavLink></li>
-        <li><NavLink>Gemte jobs</NavLink></li>
+        <li><NavLink to={!authToken ? ('/login') : ('/min-side')}>Gemte jobs</NavLink></li>
       </ul>
       <ul>
         <li><ListTitle text="For arbejdsgivere" /></li>

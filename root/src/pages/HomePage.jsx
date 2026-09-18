@@ -15,16 +15,16 @@ import { Button } from '../components/Button/Button'
 export function HomePage() {
 
   const { data: categoryData, isLoading: categoryIsLoading, error: categoryError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-categories')
-  console.log('categoryData:', categoryData)
+  // console.log('categoryData:', categoryData)
 
   const { data: jobListingsData, isLoading: joblistingsLoading, error: jobListingsError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-listings')
-  console.log('jobListingsData:', jobListingsData)
+  // console.log('jobListingsData:', jobListingsData)
 
   const { data: newsData, isLoading: newsIsLoading, error: newsError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/articles')
-  console.log('newsData: ', newsData)
+  // console.log('newsData: ', newsData)
 
   const { data: testimoniesData, isLoading: testimoniesIsLoading, error: testimoniesError } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/testimony')
-  console.log('testimoniesData: ', testimoniesData)
+  // console.log('testimoniesData: ', testimoniesData)
 
   const [ search, setSearch ] = useState('')
   const [ searchParams, setSearchParams ] = useSearchParams('search=' + search)
@@ -62,7 +62,7 @@ export function HomePage() {
         {newsError && <p>Error: {newsError.message}</p>}
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
           {randomArticles?.map((article) =>
-            <NavLink to={`/nyheder/${article.id}`}>
+            <NavLink to={`/nyheder/${article.id}`} key={article.id}>
               <NewsCard newsData={article} />
             </NavLink>
           )}

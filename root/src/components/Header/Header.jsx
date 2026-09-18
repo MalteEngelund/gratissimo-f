@@ -10,7 +10,7 @@ export function Header() {
     <header className='bg-main-red'>
       <div className='flex'>
         <NavLink to="/">
-          <img src={logo} alt="gratissimo logo" className='h-24'/>
+          <img src={logo} alt="gratissimo logo" className='h-24 ml-10'/>
         </NavLink>
       </div>
       <NavBar />

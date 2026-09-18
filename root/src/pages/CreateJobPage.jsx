@@ -18,13 +18,13 @@ export function CreateJobPage() {
   const [ jobResponse, setJobResponse ] = useState('')
 
   const { data: regionData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/regions')
-  console.log('regionData: ', regionData)
+  // console.log('regionData: ', regionData)
 
   const { data: workTypesData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/worktypes')
-  console.log('workTypesData: ', workTypesData)
+  // console.log('workTypesData: ', workTypesData)
 
   const { data: categoryData } = useFetch(import.meta.env.VITE_PUBLIC_BASE_URL + '/api/job-categories')
-  console.log('categoryData: ', categoryData)
+  // console.log('categoryData: ', categoryData)
 
   // den siger at region is missing både når jeg sender region og regionId eller begge dele til API.. Jeg kan ikke finde fejlen pt. 
 
@@ -99,7 +99,7 @@ export function CreateJobPage() {
                   <FormLabel text='Lokation' name='region'/>
                   <select name="regionId" id="regionId" {...register("regionId")}>
                     {regionData && regionData.map((region) => (
-                      <option value={region.id}>{region.name}</option>
+                      <option value={region.id} key={region.id}>{region.name}</option>
                     ))}
                   </select>
                 </div>
@@ -107,7 +107,7 @@ export function CreateJobPage() {
                   <FormLabel text='Kategori' name='jobCategoryId'/>
                   <select name="jobCategoryId" id="jobCategoryId" {...register("jobCategoryId")}>
                     {categoryData && categoryData.map((jobCategoryId) => (
-                      <option value={jobCategoryId.id}>{jobCategoryId.name}</option>
+                      <option value={jobCategoryId.id} key={jobCategoryId.id}>{jobCategoryId.name}</option>
                     ))}
                   </select>
                 </div>
@@ -115,7 +115,7 @@ export function CreateJobPage() {
                   <FormLabel text='Arbejdstid' name='workTypeId' />
                   <select name="workTypeId" id="workTypeId" {...register("workTypeId")}>
                     {workTypesData && workTypesData.map((workTypes) => (
-                      <option value={workTypes.id}>{workTypes.type}</option>
+                      <option value={workTypes.id} key={workTypes.id}>{workTypes.type}</option>
                     ))}
                   </select>
                 </div>
