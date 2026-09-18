@@ -15,6 +15,7 @@ Jeg er ikke helt tilfreds med min egen indsats eller det endelige resultat. <br>
 Jeg har fået siden til at matche looket på designet nogenlunde. Funktionaliteten har jeg dog ikke ramt særligt godt. <br>
 Jeg er løbet ind i en del flere problemer end jeg havde håbet på, og har ikke løst mange af problemerne. <br>
 Jeg har måtte sætte mange ting til side, for at nå et nogenlunde funktionelt resultat. <br>
+Opret annonce virker ikke. <br>
 Søgefunktionen på forsiden er blevet flyttet til alle jobs-siden. <br>
 
 Der er en liste over fejl og mangler til sidst i rapporten. <br>
